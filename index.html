@@ -18,8 +18,8 @@
             --gold-primary: #D4AF37;
         }
 
-        /* 全站字體策略：優先 Cinzel (英數)，缺字時(中文)自動使用 Noto Serif TC */
         body {
+            /* 全站統一字體設定 */
             font-family: 'Cinzel', 'Noto Serif TC', serif;
             font-weight: 600; 
             background-color: var(--bg-deep);
@@ -33,22 +33,12 @@
             width: 100%;
         }
 
-        /* 強制所有表單元素也繼承這個字體規則 */
-        input, select, textarea, button { 
-            font-family: 'Cinzel', 'Noto Serif TC', serif; 
-            font-weight: 600; 
-        }
-        
-        ::placeholder { color: #666; opacity: 1; font-weight: 500; }
-
-        /* 韓文專用字體 (保持易讀性) */
         .font-kr { font-family: 'Noto Sans KR', sans-serif; }
+        .font-num { font-family: 'Cinzel', serif; }
         
-        /* 隱藏滾動條 */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* 玻璃擬態樣式 */
         .glass {
             background: var(--glass-panel);
             backdrop-filter: blur(30px);
@@ -90,8 +80,11 @@
 
         .tab-content { display: none; opacity: 0; transition: opacity 0.3s ease; }
         .tab-content.active { display: block; opacity: 1; }
+
+        input, select, textarea { font-family: 'Noto Serif TC', serif; font-weight: 600; }
+        ::placeholder { color: #666; opacity: 1; font-weight: 500; }
         
-        /* --- 核心修正：時間與日期輸入框 (iOS 修正) --- */
+        /* --- 核心修正：時間與日期輸入框 --- */
         input[type="date"], input[type="time"] {
             -webkit-appearance: none;
             appearance: none;
@@ -103,13 +96,17 @@
             text-align: left;
             padding-left: 1rem;
             padding-right: 1rem;
+            
+            font-family: 'Noto Serif TC', serif !important;
+            font-weight: 500 !important;
+            font-size: 1rem;
             color: white;
+            
             height: 100%; 
             min-height: 56px; 
+            
             white-space: nowrap;
             overflow: hidden;
-            /* 字體繼承 body 設定，不需額外指定，但為保險起見可加 */
-            font-family: 'Cinzel', 'Noto Serif TC', serif !important;
         }
 
         input[type="date"]::-webkit-date-and-time-value,
@@ -175,7 +172,7 @@
                         </div>
                     </div>
                     <!-- Dynamic Temperature -->
-                    <div id="weather-temp" class="text-5xl font-bold text-white relative z-10">--°C</div>
+                    <div id="weather-temp" class="text-5xl font-bold text-white relative z-10 font-num">--°C</div>
                 </a>
 
                 <!-- Next Destination -->
@@ -185,7 +182,7 @@
                     <div class="flex flex-col justify-start mb-2 relative z-10">
                         <div class="flex items-center gap-3 mb-1">
                             <div class="text-[10px] uppercase tracking-[0.2em] text-zinc-500 font-bold whitespace-nowrap">下一站目的地</div>
-                            <div id="dash-next-time" class="text-xs text-yellow-500 font-bold tracking-wider"></div>
+                            <div id="dash-next-time" class="text-xs text-yellow-500 font-bold tracking-wider font-num"></div>
                         </div>
                         <h3 class="text-xl text-white font-bold truncate w-full" id="dash-next-event">載入中...</h3>
                     </div>
@@ -210,10 +207,10 @@
                          <div class="flex-1 min-w-0">
                              <div class="flex items-center gap-2 mb-1.5">
                                 <div class="w-1 h-3 bg-blue-500 rounded-full shadow-[0_0_8px_rgba(59,130,246,0.8)]"></div>
-                                <div class="text-[10px] uppercase tracking-[0.25em] text-blue-400/80 font-bold">住宿飯店</div>
+                                <div class="text-[10px] uppercase tracking-[0.25em] text-blue-400/80 font-bold font-num">住宿飯店</div>
                              </div>
-                             <h3 class="text-xl text-white font-bold tracking-wide truncate group-hover:text-blue-400 transition-colors">Amanti Seoul Hotel</h3>
-                             <div class="text-xs text-zinc-500 mt-0.5 tracking-wider flex items-center gap-1">
+                             <h3 class="text-xl text-white font-bold font-serif tracking-wide truncate group-hover:text-blue-400 transition-colors">Amanti Seoul Hotel</h3>
+                             <div class="text-xs text-zinc-500 mt-0.5 font-num tracking-wider flex items-center gap-1">
                                 <i data-lucide="map-pin" size="10"></i> Mapo-gu, Seoul
                              </div>
                          </div>
@@ -281,7 +278,7 @@
                         <circle id="pack-ring" cx="48" cy="48" r="42" stroke="url(#grad1)" stroke-width="3" fill="transparent" stroke-dasharray="264" stroke-dashoffset="264" class="transition-all duration-1000 ease-out" stroke-linecap="round" />
                         <defs><linearGradient id="grad1"><stop offset="0%" stop-color="#b38728"/><stop offset="100%" stop-color="#fcf6ba"/></linearGradient></defs>
                     </svg>
-                    <span id="pack-percent" class="absolute text-lg font-black text-white">0%</span>
+                    <span id="pack-percent" class="absolute text-lg font-black text-white font-num">0%</span>
                 </div>
                 <div>
                     <div class="text-lg text-white font-bold tracking-wide">打包進度</div>
@@ -299,14 +296,14 @@
                 <div class="absolute -right-10 -top-10 w-48 h-48 bg-yellow-600/10 rounded-full blur-3xl"></div>
                 <div class="flex justify-between items-start z-10">
                     <i data-lucide="nfc" class="text-zinc-600 rotate-90" size="28"></i>
-                    <span class="text-[10px] text-yellow-600/90 tracking-[0.3em] border border-yellow-600/30 px-3 py-1 rounded font-bold">TRIP CARD</span>
+                    <span class="text-[10px] text-yellow-600/90 tracking-[0.3em] border border-yellow-600/30 px-3 py-1 rounded font-bold font-num">TRIP CARD</span>
                 </div>
                 <div class="z-10 pl-1">
                     <div class="text-[10px] text-zinc-500 uppercase tracking-[0.2em] mb-2 font-bold">Total Expenses</div>
-                    <div id="total-expense" class="text-4xl font-bold text-white tracking-tight text-shadow-sm">NT$ 0</div>
+                    <div id="total-expense" class="text-4xl font-bold text-white tracking-tight text-shadow-sm font-num">NT$ 0</div>
                 </div>
                 <div class="flex justify-between items-end z-10">
-                    <div class="text-[10px] text-zinc-500 tracking-[0.3em] font-bold">**** 2026</div>
+                    <div class="text-[10px] text-zinc-500 tracking-[0.3em] font-bold font-num">**** 2026</div>
                     <div class="text-xs text-white/70 italic tracking-wider font-bold">Group Splitting</div>
                 </div>
             </div>
@@ -486,18 +483,17 @@
 
     <!-- Firebase -->
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
 
         const firebaseConfig = {
-            apiKey: "AIzaSyCnDWYi6jHu5ZJOSiAdLna_DCYTd1ro1wI",
-            authDomain: "korea-0318.firebaseapp.com",
-            projectId: "korea-0318",
-            storageBucket: "korea-0318.firebasestorage.app",
-            messagingSenderId: "723971661158",
-            appId: "1:723971661158:web:28796c672f28c259b63ca7",
-            measurementId: "G-DG9KCGR296"
+            apiKey: "AIzaSyAm35dBdL6MuVD_pcBDNOTjsJtTR7O8OkU",
+            authDomain: "seoul-7f4a8.firebaseapp.com",
+            projectId: "seoul-7f4a8",
+            storageBucket: "seoul-7f4a8.firebasestorage.app",
+            messagingSenderId: "653079863838",
+            appId: "1:653079863838:web:cce154e2a44793b171c40f"
         };
 
         const app = initializeApp(firebaseConfig);
@@ -553,8 +549,19 @@
                 ]
             },
             packing: [
-                {id: 1, cat: '證件金錢', name: '護照', checked: false},
-                {id: 2, cat: '電子產品', name: '萬用轉接頭', checked: false}
+                {id: 1, cat: '證件金錢', name: '護照 (有效期限6個月以上)', checked: false},
+                {id: 2, cat: '證件金錢', name: 'eSIM / 網卡憑證', checked: false},
+                {id: 3, cat: '證件金錢', name: 'WOWPASS / T-Money', checked: false},
+                {id: 4, cat: '證件金錢', name: '韓幣現金 / 信用卡', checked: false},
+                {id: 5, cat: '電子產品', name: '萬用轉接頭 (韓國圓孔)', checked: false},
+                {id: 6, cat: '電子產品', name: '行動電源 (需手提)', checked: false},
+                {id: 7, cat: '電子產品', name: '充電線 (手機/手錶)', checked: false},
+                {id: 8, cat: '盥洗保養', name: '牙刷 / 牙膏 (飯店可能不給)', checked: false},
+                {id: 9, cat: '盥洗保養', name: '保濕乳液 / 護手霜 (韓國很乾)', checked: false},
+                {id: 10, cat: '衣物穿搭', name: '發熱衣 / 內搭褲 (3月還是冷)', checked: false},
+                {id: 11, cat: '衣物穿搭', name: '好走的鞋 (首爾很多坡)', checked: false},
+                {id: 12, cat: '藥品雜物', name: '腸胃藥 / 感冒藥 / 止痛藥', checked: false},
+                {id: 13, cat: '藥品雜物', name: '休足時間 (逛街神器)', checked: false}
             ],
             expenses: [],
             memo: "",
@@ -604,7 +611,7 @@
                     else if (code >= 71) { desc = "雪"; icon = "snowflake"; }
                     
                     document.getElementById('weather-temp').innerText = `${temp}°C`;
-                    document.getElementById('weather-desc').innerText = desc;
+                    document.getElementById('weather-desc').innerHTML = `${desc} <i data-lucide="external-link" size="10" class="opacity-50"></i>`;
                     
                     // Update icon dynamically if needed, but lucide static render is tricky after load
                     // For simplicity in this single file, we just update text. 
@@ -926,7 +933,7 @@
                         </div>
                         <h3 class="text-white text-lg tracking-wide mb-0.5 font-bold relative z-10">${e.title}</h3> <!-- Reduced MB -->
                         ${e.korTitle ? `<div class="text-zinc-500 text-xs font-kr mb-2 font-bold">${e.korTitle}</div>` : ''}
-                        ${e.memo ? `<div class="bg-black/30 p-3 rounded-lg text-zinc-300 text-sm leading-relaxed mb-3 border-l-2 border-zinc-700 whitespace-pre-wrap font-serif font-medium shadow-inner tracking-wide">${window.autoLink(e.memo)}</div>` : ''} <!-- Optimized Memo Style with Font Fix -->
+                        ${e.memo ? `<div class="bg-black/30 p-3 rounded-lg text-zinc-300 text-sm leading-relaxed mb-3 border-l-2 border-zinc-700 whitespace-pre-wrap font-medium shadow-inner tracking-wide font-serif">${window.autoLink(e.memo)}</div>` : ''} <!-- Optimized Memo Style -->
                         
                         <div class="flex gap-2 mt-3 relative z-10">
                              ${e.korTitle ? `
