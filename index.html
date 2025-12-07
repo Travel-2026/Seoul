@@ -55,9 +55,7 @@
             background-color: rgba(35,35,35,0.6);
             border: 1px solid rgba(255,255,255,0.1);
             border-radius: 0.75rem;
-            
-            /* 修正：減少內距，避免文字斷行 */
-            padding: 0 8px; 
+            padding: 0 8px;
             
             /* 關鍵：Flexbox 垂直置中修正 */
             display: flex;
@@ -392,17 +390,20 @@
         </button>
     </nav>
 
-    <!-- Taxi Mode -->
-    <div id="taxi-overlay" class="fixed inset-0 bg-black z-[100] hidden flex flex-col justify-center items-center p-8 text-center animate-fade-in">
-        <button onclick="closeTaxiMode()" class="absolute top-8 right-8 text-zinc-500 p-4 active:scale-90 transition"><i data-lucide="x" size="32"></i></button>
-        <div class="text-[#D4AF37] text-xs tracking-[0.4em] font-black mb-10 font-en border-b border-[#D4AF37]/50 pb-3">TAXI MODE</div>
-        <div class="text-zinc-500 text-sm mb-5 font-kr font-medium">기사님, 여기로 가주세요</div>
-        <div id="taxi-kor-title" class="text-white text-5xl font-black mb-10 font-kr leading-snug px-2"></div>
-        <div class="w-full h-[1px] bg-zinc-800 mb-10"></div>
-        <div id="taxi-kor-addr" class="text-zinc-300 text-2xl font-kr font-bold leading-relaxed mb-10 px-2"></div>
-        <button onclick="copyTaxiAddr()" class="flex items-center gap-2.5 bg-[#1a1a1a] text-[#D4AF37] px-8 py-4 rounded-full font-bold active:scale-95 transition border border-[#D4AF37]/30">
+    <!-- Taxi Mode (V1 Style + Copy Button) -->
+    <div id="taxi-overlay" class="fixed inset-0 bg-black z-[100] hidden flex flex-col justify-center items-center p-8 text-center">
+        <button onclick="closeTaxiMode()" class="absolute top-8 right-8 text-zinc-500 p-4"><i data-lucide="x" size="32"></i></button>
+        <div class="text-yellow-600 text-sm tracking-[0.3em] font-black mb-8 animate-pulse font-en">TAXI MODE</div>
+        <div class="text-zinc-400 text-lg mb-2 font-kr font-bold">기사님, 여기로 가주세요</div>
+        <div id="taxi-kor-title" class="text-white text-5xl font-black mb-6 font-kr leading-tight"></div>
+        <div id="taxi-kor-addr" class="text-zinc-300 text-2xl font-kr font-bold leading-relaxed border-t border-zinc-800 pt-6 mt-2 mb-6"></div>
+        
+        <!-- Copy Button Added Here -->
+        <button onclick="copyTaxiAddr()" class="flex items-center gap-2 bg-zinc-800 text-[#D4AF37] px-6 py-3 rounded-full font-bold active:scale-95 transition border border-[#D4AF37]/30">
             <i data-lucide="copy" size="18"></i> <span class="font-zh text-sm">複製韓文地址</span>
         </button>
+
+        <div id="taxi-cht-title" class="text-zinc-600 text-sm mt-12 font-bold tracking-widest font-zh"></div>
     </div>
 
     <!-- Action Sheet -->
@@ -429,7 +430,7 @@
     <!-- Modals -->
     <div id="modal-container" class="fixed inset-0 z-[60] hidden flex items-center justify-center px-6 bg-black/80 backdrop-blur-md transition-opacity">
         
-        <!-- Itinerary Modal (FIX: Gap 2 & Padding 8px) -->
+        <!-- Itinerary Modal (Fix: Gap 2 & Padding 8px) -->
         <div id="modal-itinerary" class="hidden w-full max-w-sm glass rounded-[2rem] p-6 shadow-2xl slide-up max-h-[90vh] overflow-y-auto border border-zinc-800">
             <div class="flex justify-between items-center mb-6 border-b border-white/10 pb-4">
                 <h3 id="modal-itinerary-title" class="text-xl text-white font-bold font-zh tracking-wide">新增行程</h3>
