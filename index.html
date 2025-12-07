@@ -45,7 +45,7 @@
             opacity: 0.5;
         }
         
-        /* 日期與時間輸入框：強制高度與佈局 */
+        /* 日期與時間輸入框 */
         input[type="date"], input[type="time"] {
             font-family: 'Cinzel', serif !important;
             font-weight: 700 !important;
@@ -55,15 +55,12 @@
             background-color: rgba(35,35,35,0.6);
             border: 1px solid rgba(255,255,255,0.1);
             border-radius: 0.75rem;
-            padding: 0 8px;
-            
-            /* 關鍵：Flexbox 垂直置中修正 */
+            padding: 0 8px; 
             display: flex;
             align-items: center;
             justify-content: flex-start;
         }
 
-        /* iOS Safari 內部文字修正 */
         input[type="date"]::-webkit-date-and-time-value,
         input[type="time"]::-webkit-date-and-time-value { 
             display: inline-block;
@@ -296,13 +293,13 @@
         <div id="view-itinerary" class="tab-content space-y-6">
             <h2 class="text-3xl font-black text-white tracking-[0.1em] font-zh">行程規劃</h2>
             
-            <div class="sticky top-0 z-20 glass rounded-2xl p-2 mx-[-24px] mb-4 backdrop-blur-md shadow-lg border-b border-[#D4AF37]/10 flex items-center h-[88px]">
-                <div class="grid grid-cols-5 gap-2 px-6 w-full h-full pt-2 pb-2" id="date-tabs"></div>
+            <!-- 日期 Tabs (修正：高度72px，按鈕w-12，有呼吸感，對齊上方標題) -->
+            <div class="sticky top-0 z-20 glass rounded-2xl p-2 mb-4 backdrop-blur-md shadow-lg border-b border-[#D4AF37]/10 flex items-center h-[72px]">
+                <div class="grid grid-cols-5 gap-1.5 w-full h-full justify-items-center" id="date-tabs"></div>
             </div>
             
-            <div id="itinerary-list" class="space-y-0 relative pl-4 pb-24">
-                <div class="absolute left-[15px] top-2 bottom-2 w-[1px] bg-gradient-to-b from-transparent via-[#D4AF37]/30 to-transparent"></div>
-            </div>
+            <!-- 行程列表 (修正：移除左側時間軸與點，卡片與上方日期框等寬) -->
+            <div id="itinerary-list" class="space-y-3 pb-24"></div>
         </div>
 
         <!-- 2. Packing -->
@@ -338,7 +335,8 @@
                 </div>
                 <div class="z-10 pl-1">
                     <div class="text-[10px] text-zinc-500 uppercase tracking-[0.2em] mb-1 font-bold font-en">Total Amount</div>
-                    <div id="total-expense" class="text-4xl font-bold text-white tracking-tighter text-shadow-sm font-num text-[#D4AF37]">NT$ 0</div>
+                    <!-- 緊湊字距 -->
+                    <div id="total-expense" class="text-4xl font-bold text-white tracking-tight text-shadow-sm font-num text-[#D4AF37]">NT$ 0</div>
                 </div>
                 <div class="flex justify-between items-end z-10 border-t border-white/10 pt-4">
                     <div class="text-[9px] text-zinc-600 tracking-[0.2em] font-bold font-en">**** 2026</div>
@@ -391,19 +389,22 @@
     </nav>
 
     <!-- Taxi Mode (V1 Style + Copy Button) -->
-    <div id="taxi-overlay" class="fixed inset-0 bg-black z-[100] hidden flex flex-col justify-center items-center p-8 text-center">
-        <button onclick="closeTaxiMode()" class="absolute top-8 right-8 text-zinc-500 p-4"><i data-lucide="x" size="32"></i></button>
-        <div class="text-yellow-600 text-sm tracking-[0.3em] font-black mb-8 animate-pulse font-en">TAXI MODE</div>
-        <div class="text-zinc-400 text-lg mb-2 font-kr font-bold">기사님, 여기로 가주세요</div>
-        <div id="taxi-kor-title" class="text-white text-5xl font-black mb-6 font-kr leading-tight"></div>
-        <div id="taxi-kor-addr" class="text-zinc-300 text-2xl font-kr font-bold leading-relaxed border-t border-zinc-800 pt-6 mt-2 mb-6"></div>
+    <div id="taxi-overlay" class="fixed inset-0 bg-black z-[100] hidden flex-col justify-center items-center p-8 text-center">
+        <button onclick="closeTaxiMode()" class="absolute top-8 right-8 text-zinc-500 p-4 active:scale-90 transition"><i data-lucide="x" size="32"></i></button>
         
-        <!-- Copy Button Added Here -->
-        <button onclick="copyTaxiAddr()" class="flex items-center gap-2 bg-zinc-800 text-[#D4AF37] px-6 py-3 rounded-full font-bold active:scale-95 transition border border-[#D4AF37]/30">
-            <i data-lucide="copy" size="18"></i> <span class="font-zh text-sm">複製韓文地址</span>
+        <div class="text-[#D4AF37] text-xs tracking-[0.4em] font-black mb-12 animate-pulse font-en border-b border-[#D4AF37]/50 pb-3">TAXI MODE</div>
+        
+        <div class="text-zinc-500 text-lg mb-6 font-kr font-medium">기사님, 여기로 가주세요</div>
+        <div id="taxi-kor-title" class="text-white text-5xl font-black mb-10 font-kr leading-snug px-4 break-keep"></div>
+        
+        <div class="w-full h-[1px] bg-zinc-800 mb-10"></div>
+        
+        <div id="taxi-kor-addr" class="text-zinc-300 text-2xl font-kr font-bold leading-relaxed mb-12 px-4 break-keep"></div>
+        
+        <button onclick="copyTaxiAddr()" class="flex items-center gap-3 bg-[#1a1a1a] text-[#D4AF37] px-8 py-4 rounded-full font-bold active:scale-95 transition border border-[#D4AF37]/40 shadow-[0_0_30px_rgba(212,175,55,0.15)] group">
+            <i data-lucide="copy" size="20" class="group-hover:scale-110 transition"></i> 
+            <span class="font-zh text-base">複製韓文地址</span>
         </button>
-
-        <div id="taxi-cht-title" class="text-zinc-600 text-sm mt-12 font-bold tracking-widest font-zh"></div>
     </div>
 
     <!-- Action Sheet -->
@@ -437,7 +438,6 @@
                 <button id="btn-delete-event" onclick="deleteCurrentEvent()" class="text-red-500/70 hover:text-red-500 hidden"><i data-lucide="trash-2" size="20"></i></button>
             </div>
             <div class="space-y-4">
-                <!-- 修正：Gap 改為 2，減少間距 -->
                 <div class="flex gap-2"> 
                     <div class="flex-1">
                         <label class="block text-[11px] text-zinc-500 mb-1.5 font-bold font-zh">日期</label>
@@ -544,7 +544,7 @@
             </div>
         </div>
 
-        <!-- Members Modal -->
+        <!-- Members Modal (FIX: Button layout) -->
         <div id="modal-members" class="hidden w-full max-w-sm glass rounded-[2rem] p-6 shadow-2xl slide-up">
             <h3 class="text-xl text-white font-bold mb-6 border-b border-white/10 pb-4 font-zh tracking-wide">人員管理</h3>
             <div class="space-y-5">
@@ -877,7 +877,27 @@
 
         window.copyTaxiAddr = () => {
             const addr = document.getElementById('taxi-kor-addr').innerText;
-            if(addr) navigator.clipboard.writeText(addr).then(() => alert("✅ 地址已複製"));
+            if(addr) {
+                if (navigator.clipboard && window.isSecureContext) {
+                     navigator.clipboard.writeText(addr).then(() => alert("✅ 地址已複製"));
+                } else {
+                    // Fallback
+                    const textArea = document.createElement("textarea");
+                    textArea.value = addr;
+                    textArea.style.position = "fixed"; 
+                    textArea.style.left = "-9999px";
+                    document.body.appendChild(textArea);
+                    textArea.focus();
+                    textArea.select();
+                    try {
+                        document.execCommand('copy');
+                        alert("✅ 地址已複製");
+                    } catch (err) {
+                        alert("複製失敗，請手動複製");
+                    }
+                    document.body.removeChild(textArea);
+                }
+            }
         }
 
         window.renderMembers = () => {
@@ -966,8 +986,9 @@
                 dateTabs.innerHTML = sortedDates.map(date => {
                     const day = date.split('-')[2];
                     const active = date === currentDay;
+                    // 修正：按鈕高度改為 h-[50px]
                     const style = active ? 'bg-[#D4AF37] text-black font-bold ring-4 ring-[#D4AF37]/20 shadow-[0_0_20px_rgba(212,175,55,0.4)] scale-105' : 'bg-zinc-900/40 text-zinc-500 border border-zinc-800 hover:bg-zinc-800/80 hover:text-zinc-300';
-                    return `<button onclick="setDay('${date}')" class="transition-all duration-300 w-full h-14 rounded-2xl flex flex-col items-center justify-center gap-0.5 ${style}">
+                    return `<button onclick="setDay('${date}')" class="transition-all duration-300 w-12 h-[50px] rounded-2xl flex flex-col items-center justify-center gap-0.5 ${style}">
                             <span class="text-[9px] tracking-widest font-zh opacity-80">3月</span><span class="text-xl leading-none font-bold font-num">${day}</span></button>`;
                 }).join('');
             }
@@ -980,8 +1001,7 @@
                 return;
             }
             list.innerHTML = events.map((e, i) => `
-                <div class="relative pl-8 pb-8 group fade-in event-item" data-id="${i}">
-                    <div class="absolute left-[11px] top-2 w-2.5 h-2.5 rounded-full bg-[#D4AF37] shadow-[0_0_10px_#D4AF37] z-10 ring-4 ring-[#050505]"></div>
+                <div class="relative pl-0 pb-8 group fade-in event-item" data-id="${i}">
                     <div class="glass rounded-[2rem] p-5 border border-white/5 relative overflow-hidden active:scale-[0.99] transition-transform shadow-lg group-hover:border-[#D4AF37]/30 transition-colors duration-500">
                         <div class="flex justify-between items-start mb-1 relative z-10">
                             <span class="text-[#D4AF37] text-sm tracking-widest font-bold font-num">${e.time}</span>
@@ -1071,7 +1091,7 @@
                             </div>
                         </div>
                         <div class="flex items-center gap-3 flex-shrink-0">
-                            <div class="text-zinc-300 text-sm font-bold font-num tracking-wide">NT$ ${Number(e.amount).toLocaleString()}</div>
+                            <div class="text-zinc-300 text-sm font-bold font-num tracking-tight">NT$ ${Number(e.amount).toLocaleString()}</div>
                             <i data-lucide="chevron-right" size="14" class="text-zinc-600"></i>
                         </div>
                     </div>
@@ -1113,16 +1133,32 @@
     <!-- UI Scripts -->
     <script>
         function openTaxiMode(title, korTitle, korAddr) {
+            // Populate
             document.getElementById('taxi-kor-title').innerText = korTitle || title;
             document.getElementById('taxi-kor-addr').innerText = korAddr || "地址未設定";
-            document.getElementById('taxi-cht-title').innerText = title;
-            document.getElementById('taxi-overlay').classList.remove('hidden');
-            document.getElementById('taxi-overlay').classList.add('flex');
+            
+            // Show Overlay
+            const overlay = document.getElementById('taxi-overlay');
+            overlay.classList.remove('hidden');
+            overlay.classList.add('flex');
+            
+            // Wait slightly for display change, then fade in opacity
+            setTimeout(() => {
+                overlay.classList.remove('opacity-0');
+            }, 10);
         }
+
         function closeTaxiMode() {
-            document.getElementById('taxi-overlay').classList.add('hidden');
-            document.getElementById('taxi-overlay').classList.remove('flex');
+            const overlay = document.getElementById('taxi-overlay');
+            overlay.classList.add('opacity-0');
+            
+            // Wait for transition to finish before hiding
+            setTimeout(() => {
+                overlay.classList.remove('flex');
+                overlay.classList.add('hidden');
+            }, 300);
         }
+
         function openNaverMap(query) {
             if(!query) return;
             window.open(`https://map.naver.com/p/search/${encodeURIComponent(query)}`, '_blank');
